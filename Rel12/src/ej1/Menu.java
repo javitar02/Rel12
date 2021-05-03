@@ -1,13 +1,14 @@
 package ej1;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
 private static final int OPCION_SALIR = 5;
 	
 	private static Scanner teclado=new Scanner(System.in);
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		int opcion;
 		
@@ -19,56 +20,83 @@ private static final int OPCION_SALIR = 5;
 
 	}
 	
-	private static void tratarMenu(int opc) {
+	private static void tratarMenu(int opc) throws IOException {
 		String nomDirectorio;
+		String nomCarpeta;
 		String nomFichero;
-		String cadena;
-		boolean creado=false;
+		String nomFicheroABorrar;
+		String contenidoFichero;
+		File contenidoFiles[];
 		
-		nomDirectorio=solicitarNombreFichero();
-		try{
+		File fichero;
+		File directorio;
+		
+		boolean creada;
+		boolean borrado;
+		
 			switch (opc){
-			case 1:{
+			case 1:
+				nomDirectorio=solicitarNombreFichero();
+				directorio=new File(nomDirectorio);
 				
-				
-				File directorio=new File(nomDirectorio);
+				if(directorio.isDirectory()) {
+					System.out.println("Carpeta ya existente");
+				}else {
+					creada=directorio.mkdirs();
+					if(creada) {
+						System.out.println("Carpeta creada exitosamente");
+					}
+					System.out.println("Error, carpeta no creada");
+				}
 			
 				break;
-			}
-			case 2:{
-				System.out.println("Introduce el nombre del fichero: ");
-				nomFichero=teclado.nextLine();
+			case 2:
+				nomFichero=solicitarNombreFichero();
+				contenidoFichero=llenarFichero();
 				
-				File fichero=new File(nomFichero);
+				fichero=new File(nomFichero,contenidoFichero);
 				
-				System.out.println("Introduce una cadena: ");
-				cadena=teclado.nextLine();
+				if(fichero.isFile()) {
+					System.out.println("Fichero de texto ya existente");
+				}
 				
-				File fichero=new File(cadena);
+				fichero.createNewFile();
+				System.out.println("Fichero creado correctamente");
 				
-				System.out.println("Se ha cerrado la caja correctamente");
 				break;
-			}
-			case 3:{
-				System.out.println(almacen.nuevoCliente());
-				System.out.println("Se ha annadido un nuevo cliente");
+			case 3:
+				nomFicheroABorrar=solicitarNombreFichero();
+				File aBorrar=new File(nomFicheroABorrar);
+				
+				borrado=aBorrar.delete();
+				
+				if(borrado) {
+					System.out.println("Fichero borrado correctamente");
+				}else {
+					System.out.println("Error, no se pudo borrar el fichero");
+				}
+				
 				break;
-			}
-			case 4:{
-				numeroCaja=introducirNumeroEntero("Introduzca el numero de caja donde desea atender:");
-				numeroCliente=almacen.atenderCliente(numeroCaja);
-				System.out.println("Se ha atendido al cliente " + numeroCliente);
+				
+			case 4:
+				nomCarpeta=solicitarNombreFichero();
+				File carpetaCreada=new File(nomCarpeta);
+				
+				
+				
+				contenidoFiles=carpetaCreada.listFiles();
+				
+				for (int i = 0; i < contenidoFiles.length; i++) {
+					if (contenidoFiles[i].isFile()) {
+						System.out.println(contenidoFiles[i]);
+					}
+				}
+				
 				break;
+				
+			case 5:
+				System.out.println("Has seleccionado salir del menu. Tenga un buen dia");
 			}
-		
-			case 5:{
-				System.out.println("FIN DEL PROGRAMA");
-				break;
-			}
-			}
-		}catch (CajaException ex){
-			System.out.println(ex.getMessage());
-		}
 		
 	}
 
@@ -109,14 +137,22 @@ private static final int OPCION_SALIR = 5;
 	}
 	
 	public static String solicitarNombreFichero() {
-		String cadena;
+		String carpeta;
 		
-		System.out.println("Introduce una cadena: ");
-		cadena=teclado.nextLine();
+		System.out.println("Introduce el nombre del fichero o de la carpeta a crear: ");
+		carpeta=teclado.nextLine();
 		
-		return cadena;
+		return carpeta;
 	}
 	
+	public static String llenarFichero() {
+		String rellenoFichero;
+		
+		System.out.println("Introduce una cadena para rellenar el fichero: ");
+		rellenoFichero=teclado.nextLine();
+		
+		return rellenoFichero;
+	}
 	
 	
 }
