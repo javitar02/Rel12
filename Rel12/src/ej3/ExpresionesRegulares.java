@@ -69,7 +69,7 @@ public class ExpresionesRegulares {
 	private static boolean comprobarLineaCorrecta(String linea) {
 		
 
-		return linea.matches(PATRON_LINEA );
+		return linea.matches(PATRON_LINEA);
 	}
 
 	
