@@ -2,34 +2,40 @@ package ej4;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class ejerc4 {
 	private static Scanner teclado=new Scanner(System.in);
-	private static final String PATRON_LINEA = ("^[0-9]{4}[A-Z]{3}$");
+	private static final String PATRON_LINEA = "[A-Za-z0-9\\s]+[ ][1-9]{4}[-][A-Z]{3}";
 	
 	public static void main(String[] args) {
 		String nomFichero;
 		String linea;
+		String matricula;
+		int ultimoEspacio;
 		boolean esCorrecto=true;
 		
 		System.out.println("Introduce un fichero: ");
 		nomFichero=teclado.nextLine();
 		
 		
-		try (BufferedReader salida=new BufferedReader(new FileReader(nomFichero));){
-			linea=salida.readLine();
+		try (BufferedReader filtroLectura=new BufferedReader(new FileReader(nomFichero));
+				PrintWriter filtroEscritura=new PrintWriter(new FileWriter("MatriculasCorrectas.txt"))) {;
+			
+			linea=filtroLectura.readLine();
 			
 			while(linea!=null && esCorrecto) {
 				esCorrecto=comprobarMatricula(linea);
 				
 				if(esCorrecto) {
-					System.out.println("Formato correcto");
-					
+					ultimoEspacio=linea.indexOf(" ");
+					matricula=linea.substring(ultimoEspacio+1);
+					filtroEscritura.println(matricula);
 				}
-				System.out.println("Formato incorrecto");
+				linea=filtroLectura.readLine();
 				
 			}
 			
