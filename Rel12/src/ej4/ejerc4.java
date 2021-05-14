@@ -18,7 +18,7 @@ public class ejerc4 {
 		int ultimoEspacio;
 		boolean esCorrecto=true;
 		
-		System.out.println("Introduce un fichero: ");
+		System.out.println("Introduce el nombre del fichero: ");
 		nomFichero=teclado.nextLine();
 		
 		
