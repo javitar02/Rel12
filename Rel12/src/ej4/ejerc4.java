@@ -1,6 +1,7 @@
 package ej4;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,50 +9,60 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class ejerc4 {
-	private static Scanner teclado=new Scanner(System.in);
-	private static final String PATRON_LINEA = "[A-Za-z0-9\\s]+[ ][1-9]{4}[-][A-Z]{3}";
+
+	//Tenemos en cuenta nombres de modelo de más de una palabra
+	private static final String PATRON_LINEA = "(([A-Za-z0-9]+) )+[0-9]{4}-[A-Z]{3}";
+	private static final String MATRICULAS_NUEVAS_TXT = "MatriculasNuevas.txt";
 	
+	private static Scanner teclado = new Scanner(System.in);
+
 	public static void main(String[] args) {
-		String nomFichero;
-		String linea;
-		String matricula;
-		int ultimoEspacio;
-		boolean esCorrecto=true;
-		
-		System.out.println("Introduce el nombre del fichero: ");
-		nomFichero=teclado.nextLine();
-		
-		
-		try (BufferedReader filtroLectura=new BufferedReader(new FileReader(nomFichero));
-				PrintWriter filtroEscritura=new PrintWriter(new FileWriter("MatriculasCorrectas.txt"))) {;
-			
-			linea=filtroLectura.readLine();
-			
-			while(linea!=null && esCorrecto) {
-				esCorrecto=comprobarMatricula(linea);
-				
-				if(esCorrecto) {
-					ultimoEspacio=linea.indexOf(" ");
-					matricula=linea.substring(ultimoEspacio+1);
-					filtroEscritura.println(matricula);
-				}
-				linea=filtroLectura.readLine();
-				
-			}
-			
-			
+
+		String nombreFichero;
+		System.out.println("Introduce el nombre del fichero con las matriculas");
+		nombreFichero = teclado.nextLine();
+
+		try {
+			crearFicheroConMatriculasNuevas(nombreFichero);
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			System.out.println("Error " + e.getMessage());
 		}
-		
+
 	}
-	private static boolean comprobarMatricula(String linea) {
+
+	private static void crearFicheroConMatriculasNuevas(String nombreFichero) throws IOException {
+
+		String linea;
 		
-		return linea.matches(PATRON_LINEA);
+
+		try (BufferedReader filtroLectura = new BufferedReader(new FileReader(nombreFichero));
+			PrintWriter filtroEscritura = new PrintWriter( new FileWriter(MATRICULAS_NUEVAS_TXT)); ){
+		
+			linea = filtroLectura.readLine();
+			while (linea != null) {
+				escribirSiEsNueva(linea, filtroEscritura);
+
+				linea = filtroLectura.readLine();
+
+			}
+
+			System.out.println("Se ha creado correctamente el fichero " + MATRICULAS_NUEVAS_TXT);
+		} catch (FileNotFoundException e) {
+			System.out.println("No existe el fichero " + nombreFichero);
+		} 
+
 	}
-	
-	
-	
-	
-	
+
+	private static void escribirSiEsNueva(String linea, PrintWriter filtroEscritura) {
+
+		String[] partesDeLinea;
+		if (linea.matches(PATRON_LINEA)) {
+			partesDeLinea=linea.split(" ");
+			
+			filtroEscritura.println(partesDeLinea[partesDeLinea.length -1 ]);
+		
+		}
+
+	}
+
 }
