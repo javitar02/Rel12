@@ -25,7 +25,7 @@ public class ejercicio6 {
 			String curso;
 			boolean created = false;
 
-			try (BufferedReader bw = new BufferedReader(new FileReader(fileName))) {
+			try (BufferedReader bw = new BufferedReader(new FileReader(nomFichero))) {
 				line = bw.readLine();
 				while (line != null) {
 					if (line.matches(PATRON_LINEA)) {
@@ -33,16 +33,17 @@ public class ejercicio6 {
 						nombre = lineParts[0];
 						apellido1 = lineParts[1];
 						apellido2 = lineParts[2];
+						String nomCompleto=nombre.concat(apellido1).concat(apellido2);
 						File fichero = new File(nombre);
 						if (!fichero.isFile()) {
 							created = fichero.createNewFile();
 							if (created) {
-								System.out.println("Fichero " + validPart + " creado correctamente");
+								System.out.println("Fichero " + nomFichero + " creado correctamente");
 							} else {
-								System.out.println("Fichero " + validPart + " no creado");
+								System.out.println("Fichero " + nomFichero + " no creado");
 							}
 						} else {
-							System.out.println("Fichero " + validPart + " ya existente");
+							System.out.println("Fichero " + nomFichero + " ya existente");
 						}
 
 					}
