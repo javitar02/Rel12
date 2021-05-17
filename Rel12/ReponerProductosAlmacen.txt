@@ -1,0 +1,16 @@
+Producto HP1100 Reponer  en el almacen numero 1 por tener stock = 12
+Producto HP1100 Reponer  en el almacen numero 3 por tener stock = 10
+Producto HP1100 Reponer  en el almacen numero 4 por tener stock = 2
+Producto HP1100 Reponer  en el almacen numero 5 por tener stock = 5
+Producto HP155 Reponer  en el almacen numero 1 por tener stock = 3
+Producto HP155 Reponer  en el almacen numero 3 por tener stock = 8
+Producto HP155 Reponer  en el almacen numero 4 por tener stock = 5
+Producto HP155 Reponer  en el almacen numero 5 por tener stock = 9
+Producto DD155 Reponer  en el almacen numero 3 por tener stock = 0
+Producto DD155 Reponer  en el almacen numero 4 por tener stock = 15
+Producto DD155 Reponer  en el almacen numero 5 por tener stock = 9
+Producto DD666 Reponer  en el almacen numero 1 por tener stock = 1
+Producto DD666 Reponer  en el almacen numero 2 por tener stock = 18
+Producto DD666 Reponer  en el almacen numero 3 por tener stock = 15
+Producto DD666 Reponer  en el almacen numero 4 por tener stock = 2
+Producto DD666 Reponer  en el almacen numero 5 por tener stock = 5

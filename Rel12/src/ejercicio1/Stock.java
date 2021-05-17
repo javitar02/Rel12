@@ -1,11 +1,11 @@
-package ej7;
+package ejercicio1;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
 public class Stock implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	
 	private String nombre;
 	private String categoria;
 	private int cantidadesEnAlmacen[];
