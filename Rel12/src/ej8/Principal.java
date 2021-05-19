@@ -13,8 +13,24 @@ public class Principal {
 	public static void main(String[] args) {
 		
 		leerArchivo("notas.txt");
+		leerArchivoBin("SuspensosObjetos.dat");
+		crearCarpeta("Repetidores");
 
 	}
+
+	
+
+	private static void crearCarpeta(String nomCarpeta) {
+		File carpeta=new File(nomCarpeta);
+		if(carpeta.exists() && carpeta.isDirectory()) {
+			System.out.println("Error, carpeta ya existente");
+		}else {
+			
+		}
+		
+	}
+
+
 
 	private static void leerArchivo(String fileName) {
 		String linea;
@@ -37,7 +53,6 @@ public class Principal {
 
 	private static void tratarLinea(String linea,ObjectOutputStream oos) {
 		String separador[]=linea.split(";");
-		StringBuilder sb=new StringBuilder();
 		String nomAlumno;
 		String notas;
 		CuentaSuspenso otro;
@@ -49,12 +64,13 @@ public class Principal {
 			
 		}
 			
-		for (String  : separador) {
-			
-		}
+		
 		
 	}
 
-
+	private static void leerArchivoBin(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

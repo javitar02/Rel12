@@ -1,8 +1,11 @@
 package ej8;
 
-public class CuentaSuspenso {
+import java.io.Serializable;
+
+public class CuentaSuspenso implements Serializable{
 	private String nombreAlumno;
 	private int asignaturaSuspensas;
+	
 	public CuentaSuspenso(String nombreAlumno, int asignaturaSuspensas) {
 		super();
 		this.nombreAlumno = nombreAlumno;
