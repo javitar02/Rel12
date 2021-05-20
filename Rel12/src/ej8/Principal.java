@@ -1,6 +1,7 @@
 package ej8;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,67 +11,55 @@ import java.io.ObjectOutputStream;
 
 public class Principal {
 
+	private static final int NOTA_MIN_APROBADO = 5;
+	public static final int SUSPENSOS_MAX = 2;
+
 	public static void main(String[] args) {
-		
-		leerArchivo("notas.txt");
-		leerArchivoBin("SuspensosObjetos.dat");
-		crearCarpeta("Repetidores");
-
+		leerFicheroPrincipal("notas.txt");
 	}
 
 	
-
-	private static void crearCarpeta(String nomCarpeta) {
-		File carpeta=new File(nomCarpeta);
-		if(carpeta.exists() && carpeta.isDirectory()) {
-			System.out.println("Error, carpeta ya existente");
-		}else {
-			
-		}
+	private static void leerFicheroPrincipal(String nomFichero) {
+		int suspensos;
+		String nomAlumno,linea;
+		String lineaPorPartes[];
 		
-	}
-
-
-
-	private static void leerArchivo(String fileName) {
-		String linea;
-		
-		try (BufferedReader lectura=new BufferedReader(new FileReader("notas.txt"))){
-			ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(fileName));
+		try (BufferedReader lectura=new BufferedReader(new FileReader(nomFichero));
+				ObjectOutputStream escritura=new ObjectOutputStream(new FileOutputStream("SuspensosObjetos.dat"))){
 			linea=lectura.readLine();
-			
 			while (linea!=null) {
-				tratarLinea(linea,oos);
-				lectura.readLine();
+				suspensos=0;
+				lineaPorPartes=linea.split(";");
+				nomAlumno=lineaPorPartes[0];
+				for (int i = 1; i < lineaPorPartes.length; i++) {
+					if(Integer.parseInt(lineaPorPartes[i])<NOTA_MIN_APROBADO) {
+						suspensos++;
+					}
+				}
+			crearFicheroObjeto(nomAlumno,suspensos, escritura);	
+			crearCarpetaConRepetidores("Repetidores", nomAlumno, suspensos);
+			linea=lectura.readLine();
 			}
-		} catch (FileNotFoundException e) {
-			System.out.println("Archivo no encontrado");
-		} catch (IOException e1) {
-			System.out.println("Error");
+		} catch (EOFException e) {
+			System.out.println(e.getMessage());
+		}catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}
 
-	private static void tratarLinea(String linea,ObjectOutputStream oos) {
-		String separador[]=linea.split(";");
-		String nomAlumno;
-		String notas;
-		CuentaSuspenso otro;
+	private static void crearFicheroObjeto(String nomFichero, int suspensos, ObjectOutputStream escritura) throws IOException {
+		CuentaSuspenso alumno=new CuentaSuspenso(nomFichero, suspensos);
+		escritura.writeObject(alumno);	
+	}
 	
-		nomAlumno=separador[0];
-		
-		for (int i = 0; i < separador.length; i++) {
-			notas=separador[1].concat(separador[separador.length]);
-			
-		}
-			
-		
-		
+	private static void crearCarpetaConRepetidores(String nomCarpeta,String nomAlumno, int suspensos) {
+		File directorio=new File(nomCarpeta);
+		if(suspensos>SUSPENSOS_MAX) {
+			File alumnoSuspenso=new File(directorio + "/" + nomAlumno);
+			alumnoSuspenso.mkdirs();
+		}		
 	}
-
-	private static void leerArchivoBin(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
