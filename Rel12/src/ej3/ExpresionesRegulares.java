@@ -44,7 +44,7 @@ public class ExpresionesRegulares {
 		{
 
 			linea=filtroLectura.readLine();
-			while ( linea!=null && correcto){
+			while (linea!=null && correcto){
 				correcto= comprobarLineaCorrecta(linea);
 				
 				if (!correcto) {

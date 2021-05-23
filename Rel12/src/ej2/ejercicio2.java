@@ -64,7 +64,7 @@ public class ejercicio2 {
 		String linea;
 		int numeroDeLinea = 1;
 		String nombreFicheroResultado = "BuscandoPalabra" + palabra + ".txt";
-		boolean palabraEncontrada=false;
+		boolean palabraEncontrada = false;
 
 		try (BufferedReader filtroEntrada = new BufferedReader(new FileReader(nombreFichero));
 				PrintWriter filtroSalida = new PrintWriter(new FileWriter(nombreFicheroResultado));) {
@@ -73,18 +73,18 @@ public class ejercicio2 {
 
 			while (linea != null) {
 				// Si aparece dos veces en la lÃ­nea solo lo pondra una vez
-				
+
 				if (linea.contains(palabra)) {
-					filtroSalida.println("Encontrada en linea " + numeroDeLinea + " columna " + (linea.indexOf(palabra) + 1));
-					palabraEncontrada=true;
+					filtroSalida.println(
+							"Encontrada en linea " + numeroDeLinea + " columna " + (linea.indexOf(palabra) + 1));
+					palabraEncontrada = true;
 				}
 
 				linea = filtroEntrada.readLine();
 				numeroDeLinea++;
 			}
 
-			
-			if ( palabraEncontrada)
+			if (palabraEncontrada)
 				System.out.println("Fichero " + nombreFicheroResultado + " creado correctamente.");
 			else {
 				System.out.println("No se encontró la palabra xx");
@@ -94,15 +94,11 @@ public class ejercicio2 {
 			System.out.println("Error: " + e.getMessage());
 		}
 
-		File fichero=new File(nombreFicheroResultado);
-		if ( !palabraEncontrada && fichero.isFile()) {
+		File fichero = new File(nombreFicheroResultado);
+		if (!palabraEncontrada && fichero.isFile()) {
 			fichero.delete();
 		}
-		
+
 	}
-	
-	
-	
 
 }
-
